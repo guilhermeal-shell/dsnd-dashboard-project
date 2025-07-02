@@ -36,7 +36,7 @@ class QueryBase(QueryMixin):
         # of id columns used for joining
         # order by the event_date column
         # YOUR CODE HERE
-        q = """
+        q = f"""
             SELECT event_date, 
                    SUM(positive_events) AS positive_events, 
                    SUM(negative_events) AS negative_events
