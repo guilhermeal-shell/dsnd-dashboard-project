@@ -7,7 +7,7 @@ from .query_base import QueryBase
 # Import dependencies needed for sql execution
 # from the `sql_execution` module
 #### YOUR CODE HERE
-from sql_execution import *
+import sql_execution
 # Define a subclass of QueryBase
 # called Employee
 #### YOUR CODE HERE
@@ -32,14 +32,14 @@ class Employee(QueryBase):
     
     #### YOUR CODE HERE
     def names(self):
-        query = 
+        q = 
         """
         SELECT CONCAT(first_name, ' ', last_name) AS full_name,
                employee_id
         FROM employee
         """
 
-        return self.query(query)  # raw list of (full_name, employee_id) tuples  
+        return self.query(q)  # raw list of (full_name, employee_id) tuples  
         
     # Define a method called `username`
     # that receives an `id` argument
@@ -55,14 +55,13 @@ class Employee(QueryBase):
         # with an id equal to the id argument
         #### YOUR CODE HERE
     
-        query =
-        """
+        q =
+        f"""
         SELECT CONCAT(first_name, ' ', last_name) AS full_name
         FROM employee
         WHERE employee_id = ?
         """
-        results = self.query(query, (id,))
-        return results[0][0] if results else ""
+        return self.query(q)
 
     # Below is method with an SQL query
     # This SQL query generates the data needed for
@@ -74,7 +73,7 @@ class Employee(QueryBase):
     #### YOUR CODE HERE
     def model_data(self, id):
 
-        query =
+        q =
         """
         SELECT SUM(positive_events) positive_events
         , SUM(negative_events) negative_events
@@ -83,5 +82,5 @@ class Employee(QueryBase):
         USING({self.name}_id)
         WHERE {self.name}.{self.name}_id = {id}
         """
-        return self.pandas_query(query, (id,))
+        return self.pandas_query(q)
     
