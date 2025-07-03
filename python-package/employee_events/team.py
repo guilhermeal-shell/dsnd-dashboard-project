@@ -4,10 +4,8 @@ from .query_base import QueryBase
 
 # Import dependencies for sql execution
 #### YOUR CODE HERE
-import sqlite3
 import pandas as pd
 
-connection = sqlite3.connect('python-package/employee_events/employee_events.db')
 
 # Create a subclass of QueryBase
 # called  `Team`
@@ -79,5 +77,5 @@ class Team(QueryBase):
                     GROUP BY employee_id
                    )
                 """
-        return pd.read_sql_query(sql_query, connection)
+        return self.pandas_query(sql_query)
         
