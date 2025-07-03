@@ -39,7 +39,7 @@ class Employee(QueryBase):
         FROM employee
         """
 
-        return self.query(q)  # raw list of (full_name, employee_id) tuples  
+        return self.query(self, q) 
         
     # Define a method called `username`
     # that receives an `id` argument
@@ -54,14 +54,14 @@ class Employee(QueryBase):
         # to only return the full name of the employee
         # with an id equal to the id argument
         #### YOUR CODE HERE
-    
+    def username(self, id):
         q =
         f"""
         SELECT CONCAT(first_name, ' ', last_name) AS full_name
         FROM employee
         WHERE employee_id = ?
         """
-        return self.query(q)
+        return self.query(self, q)
 
     # Below is method with an SQL query
     # This SQL query generates the data needed for
@@ -82,5 +82,5 @@ class Employee(QueryBase):
         USING({self.name}_id)
         WHERE {self.name}.{self.name}_id = {id}
         """
-        return self.pandas_query(q)
+        return self.pandas_query(self, q)
     
