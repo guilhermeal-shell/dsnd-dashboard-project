@@ -8,7 +8,13 @@ from .sql_execution import QueryMixin
 # for querying the employee_events database.
 # YOUR CODE HERE
 class QueryBase(QueryMixin):
-    connection = sqlite3.connect('python-package/employee_events/employee_events.db')
+
+    def __init__(self):
+        self.db_path = "python-package/employee_events/employee_events.db"
+
+    def _connect_db(self):
+        return sqlite3.connect(self.db_path)
+        
     # Create a class attribute called `name`
     # set the attribute to an empty string
     # YOUR CODE HERE
@@ -46,7 +52,9 @@ class QueryBase(QueryMixin):
             ORDER BY event_date
         """.format(self.name)
 
-        return pd.read_sql_query(q, connection)
+        with self._connect_db() as connection:
+            df = pd.read_sql_query(q, connection)
+        return df
     
 
     # Define a `notes` method that receives an id argument
@@ -66,7 +74,10 @@ class QueryBase(QueryMixin):
             FROM notes
             WHERE {self.name}_id = ?
         """
-        return pd.read_sql_query(q, connection)
+        
+        with self._connect_db() as connection:
+            df = pd.read_sql_query(q, connection)
+        return df
 
 
 
